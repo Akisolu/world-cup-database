@@ -1,44 +1,77 @@
-# World Cup Database (freeCodeCamp Project)
+# 🏆 World Cup Database (Bash ETL & PostgreSQL Analytics)
 
-Este proyecto forma parte de la certificación **Relational Database** de freeCodeCamp. Consiste en la creación y automatización de una base de datos en PostgreSQL que almacena información histórica de los partidos de la Copa Mundial de la FIFA, junto con scripts en Bash para la inserción masiva de datos y la ejecución de consultas analíticas.
-
-## 🚀 Características
-
-* **Esquema Relacional**: Base de datos estructurada con tablas para equipos (`teams`) y partidos (`games`), implementando claves primarias, foráneas y restricciones de unicidad.
-* **Automatización con Bash**: Script de automatización (`insert_data.sh`) encargado de procesar un archivo fuente CSV (`games.csv`), registrar dinámicamente los equipos y almacenar las estadísticas de cada partido de forma normalizada.
-* **Consultas SQL**: Script analítico (`queries.sh`) enfocado en extraer métricas de rendimiento como promedios de goles, conteos de campeones y filtrados específicos de datos.
+Proyecto interactivo de automatización y análisis de datos sobre mundiales de fútbol. Incluye la creación de la base de datos relacional, un script de Bash para procesamiento e inserción masiva desde un CSV, y una suite de consultas analíticas avanzadas.
 
 ---
 
+## ⚡ Flujo de Automatización (ETL)
+
+```mermaid
+flowchart LR
+    A[games.csv] -->|Lectura & Parsing| B[insert_data.sh]
+    B -->|Comprobación de Duplicados| C[(PostgreSQL)]
+    C -->|Consultas Analíticas| D[queries.sh]
+```
+
+## ✨ Características y Conceptos Clave
+* **Scripting Bash para Carga de Datos `(insert_data.sh)`:**
+  * Lectura automatizada de archivos CSV delimitados por comas.
+  * Lógica condicional para evitar duplicados de equipos (`teams`) antes de insertar los partidos (`games`).
+  * Ejecución de comandos PostgreSQL vía `psql` desde la terminal de Bash.
+* **Modelado Relacional Relacionado:**
+  * Uso de claves primarias (`PRIMARY KEY`), foráneas (`FOREIGN KEY`) y restricciones de unicidad (`UNIQUE`).
+* **Análisis de Datos con SQL Avanzado (`queries.sh`):**
+  * Agregaciones complejas (`AVG`, `SUM`, `COUNT`, `ROUND`).
+  * Consultas relacionales con múltiples `JOIN` entre tablas de equipos y partidos.
+  * Agrupamientos y filtros avanzados (`GROUP BY`, `ORDER BY`, `LIKE`).
+ 
 ## 🛠️ Tecnologías Utilizadas
+* **Base de Datos:** PostgreSQL
+* **Lenguaje de Scripting:** Bash / Shell Scripting
+* **Fuente de Datos:** CSV (Comma-Separated Values)
 
-* **PostgreSQL**: Motor de base de datos relacional para el almacenamiento estructurado.
-* **Bash Scripting**: Automatización y lectura de flujos de datos.
+## 🚀 Cómo Ejecutar el Proyecto
+### Prerrequisitos
+Tener instalado PostgreSQL y la herramienta de línea de comandos `psql`.
+### Pasos de Configuración
+1. **Clonar el repositorio:**
+   ```bash
+      git clone https://github.com/Aki-new/world-cup-database.git
+      cd world-cup-database
+   ```
+2. **Crear e importar la base de datos base:**
+   ```bash
+      psql -U postgres < worldcup.sql
+   ```
+3. **Dar permisos de ejecución a los scripts:**
+   ```bash
+      chmod +x insert_data.sh queries.sh
+   ```
+4. **Poblar la base de datos desde el CSV:**
+   ```bash
+      ./insert_data.sh
+   ```
+5. **Ejecutar el reporte de consultas SQL:**
+   ```bash
+      ./queries.sh
+   ```
+
+## 📊 Ejemplos de Consultas Analíticas (Queries)
+```SQL
+   -- Promedio de goles marcados por equipos ganadores redondeado a 2 decimales
+   SELECT ROUND(AVG(winner_goals), 2) FROM games;
+
+   -- Equipos que han ganado la copa (orden alfabético)
+   SELECT DISTINCT(name) 
+   FROM teams 
+   INNER JOIN games ON teams.team_id = games.winner_id 
+   WHERE round = 'Final' 
+   ORDER BY name;
+```
 
 ---
 
-## 📂 Estructura del Proyecto
+## 📜 Créditos y Reconocimientos
 
-* `worldcup.sql`: Volcado (dump) del esquema y la configuración estructural de la base de datos PostgreSQL.
-* `insert_data.sh`: Script en Bash diseñado para procesar el set de datos en formato CSV e insertar los registros en la base de datos de manera limpia y eficiente.
-* `queries.sh`: Archivo ejecutable con consultas SQL complejas para responder preguntas estadísticas específicas sobre los torneos.
-
----
-
-## 🔧 Configuración e Instalación
-
-1. **Reconstruir la base de datos** utilizando el archivo estructural proporcionado:
-   ```bash
-   psql -U postgres < worldcup.sql
-
-2. **Otorgar permisos de ejecución** a los scripts de automatización:
-   ```bash
-   chmod +x insert_data.sh queries.sh
-
-3. **Poblar la base de datos** ejecutando el script de inserción (asegúrate de contar con el archivo fuente games.csv en el mismo directorio):
-   ```bash
-   ./insert_data.sh
-
-4. **Ejecutar consultas estadísticas**:
-   ```bash
-   ./queries.sh
+* **Origen de la consigna / dataset:** Este proyecto es uno de los desafíos requeridos para la obtención de la **Certificación de Bases de Datos Relacionales** de [freeCodeCamp](https://www.freecodecamp.org/).
+* **Implementación:** La lógica de scripts en Bash (`insert_data.sh`), la estructuración del esquema PostgreSQL (`worldcup.sql`) y la elaboración de consultas analíticas (`queries.sh`) fueron desarrolladas por completo como resolución individual al problema planteado.
