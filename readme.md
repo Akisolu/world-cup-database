@@ -1,67 +1,68 @@
 # 🏆 World Cup Database (Bash ETL & PostgreSQL Analytics)
+*🇪🇸 [Leer en español](README.es.md)*
 
-Proyecto interactivo de automatización y análisis de datos sobre mundiales de fútbol. Incluye la creación de la base de datos relacional, un script de Bash para procesamiento e inserción masiva desde un CSV, y una suite de consultas analíticas avanzadas.
+Interactive automation and data analysis project about football world cups. It includes the creation of the relational database, a Bash script for mass processing and insertion from a CSV, and a suite of advanced analytical queries.
 
 ---
 
-## ⚡ Flujo de Automatización (ETL)
+## ⚡ Automation Flow (ETL)
 
 ```mermaid
 flowchart LR
-    A[games.csv] -->|Lectura & Parsing| B[insert_data.sh]
-    B -->|Comprobación de Duplicados| C[(PostgreSQL)]
-    C -->|Consultas Analíticas| D[queries.sh]
+    A[games.csv] -->|Reading & Parsing| B[insert_data.sh]
+    B -->|Duplicate Checking| C[(PostgreSQL)]
+    C -->|Analytical Queries| D[queries.sh]
 ```
 
-## ✨ Características y Conceptos Clave
-* **Scripting Bash para Carga de Datos `(insert_data.sh)`:**
-  * Lectura automatizada de archivos CSV delimitados por comas.
-  * Lógica condicional para evitar duplicados de equipos (`teams`) antes de insertar los partidos (`games`).
-  * Ejecución de comandos PostgreSQL vía `psql` desde la terminal de Bash.
-* **Modelado Relacional Relacionado:**
-  * Uso de claves primarias (`PRIMARY KEY`), foráneas (`FOREIGN KEY`) y restricciones de unicidad (`UNIQUE`).
-* **Análisis de Datos con SQL Avanzado (`queries.sh`):**
-  * Agregaciones complejas (`AVG`, `SUM`, `COUNT`, `ROUND`).
-  * Consultas relacionales con múltiples `JOIN` entre tablas de equipos y partidos.
-  * Agrupamientos y filtros avanzados (`GROUP BY`, `ORDER BY`, `LIKE`).
+## ✨ Key Features and Concepts
+* **Bash Scripting for Data Loading `(insert_data.sh)`:**
+  * Automated reading of comma-delimited CSV files.
+  * Conditional logic to avoid duplicate teams (`teams`) before inserting matches (`games`).
+  * Execution of PostgreSQL commands via `psql` from the Bash terminal.
+* **Relational Data Modeling:**
+  * Use of primary keys (`PRIMARY KEY`), foreign keys (`FOREIGN KEY`), and unique constraints (`UNIQUE`).
+* **Data Analysis with Advanced SQL (`queries.sh`):**
+  * Complex aggregations (`AVG`, `SUM`, `COUNT`, `ROUND`).
+  * Relational queries with multiple `JOIN`s between team and match tables.
+  * Advanced groupings and filters (`GROUP BY`, `ORDER BY`, `LIKE`).
  
-## 🛠️ Tecnologías Utilizadas
-* **Base de Datos:** PostgreSQL
-* **Lenguaje de Scripting:** Bash / Shell Scripting
-* **Fuente de Datos:** CSV (Comma-Separated Values)
+## 🛠️ Technologies Used
+* **Database:** PostgreSQL
+* **Scripting Language:** Bash / Shell Scripting
+* **Data Source:** CSV (Comma-Separated Values)
 
-## 🚀 Cómo Ejecutar el Proyecto
-### Prerrequisitos
-Tener instalado PostgreSQL y la herramienta de línea de comandos `psql`.
-### Pasos de Configuración
-1. **Clonar el repositorio:**
+## 🚀 How to Run the Project
+### Prerequisites
+Have PostgreSQL and the `psql` command-line tool installed.
+### Setup Steps
+1. **Clone the repository:**
    ```bash
       git clone https://github.com/Aki-new/world-cup-database.git
       cd world-cup-database
    ```
-2. **Crear e importar la base de datos base:**
+2. **Create and import the base database:**
    ```bash
       psql -U postgres < worldcup.sql
    ```
-3. **Dar permisos de ejecución a los scripts:**
+3. **Give execution permissions to the scripts:**
    ```bash
       chmod +x insert_data.sh queries.sh
    ```
-4. **Poblar la base de datos desde el CSV:**
+4. **Populate the database from the CSV:**
    ```bash
       ./insert_data.sh
    ```
-5. **Ejecutar el reporte de consultas SQL:**
+5. **Run the SQL queries report:**
    ```bash
       ./queries.sh
    ```
 
-## 📊 Ejemplos de Consultas Analíticas (Queries)
+## 📊 Analytical Queries Examples
 ```SQL
-   -- Promedio de goles marcados por equipos ganadores redondeado a 2 decimales
+   -- Average number of goals scored by winning teams rounded to 2 decimal places
    SELECT ROUND(AVG(winner_goals), 2) FROM games;
 
-   -- Equipos que han ganado la copa (orden alfabético)
+   -- Teams that have won the cup (alphabetical order)
    SELECT DISTINCT(name) 
    FROM teams 
    INNER JOIN games ON teams.team_id = games.winner_id 
@@ -71,7 +72,7 @@ Tener instalado PostgreSQL y la herramienta de línea de comandos `psql`.
 
 ---
 
-## 📜 Créditos y Reconocimientos
+## 📜 Credits and Acknowledgments
 
-* **Origen de la consigna / dataset:** Este proyecto es uno de los desafíos requeridos para la obtención de la **Certificación de Bases de Datos Relacionales** de [freeCodeCamp](https://www.freecodecamp.org/).
-* **Implementación:** La lógica de scripts en Bash (`insert_data.sh`), la estructuración del esquema PostgreSQL (`worldcup.sql`) y la elaboración de consultas analíticas (`queries.sh`) fueron desarrolladas por completo como resolución individual al problema planteado.
+* **Prompt / dataset origin:** This project is one of the challenges required to obtain the **Relational Database Certification** from [freeCodeCamp](https://www.freecodecamp.org/).
+* **Implementation:** The Bash scripting logic (`insert_data.sh`), the structuring of the PostgreSQL schema (`worldcup.sql`), and the development of analytical queries (`queries.sh`) were entirely developed as an individual solution to the proposed problem.
