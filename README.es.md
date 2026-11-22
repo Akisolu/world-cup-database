@@ -1,5 +1,7 @@
 # 🏆 World Cup Database (Bash ETL & PostgreSQL Analytics)
-*🇺🇸 [Read this in English](README.md)*
+
+**Qué hace:** Carga datos históricos de mundiales desde un archivo CSV a una base de datos y responde preguntas como el promedio de goles o qué equipos ganaron finales.  
+**Por qué importa:** Los datos dispersos en un CSV hacen lentas y poco confiables las preguntas estadísticas.
 
 Proyecto interactivo de automatización y análisis de datos sobre mundiales de fútbol. Incluye la creación de la base de datos relacional, un script de Bash para procesamiento e inserción masiva desde un CSV, y una suite de consultas analíticas avanzadas.
 
