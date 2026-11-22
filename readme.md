@@ -1,4 +1,11 @@
 # 🏆 World Cup Database (Bash ETL & PostgreSQL Analytics)
+
+> **What it does:** Loads historical World Cup data from a CSV file into a database and answers questions such as average goals or which teams won finals.
+> **Why it matters:** Data scattered in a CSV makes statistical questions slow and unreliable to answer.
+> **Qué hace:** Carga datos históricos de mundiales desde un archivo CSV a una base de datos y responde preguntas como el promedio de goles o qué equipos ganaron finales.
+> **Por qué importa:** Los datos dispersos en un CSV hacen lentas y poco confiables las preguntas estadísticas.
+>
+> 📄 Versión completa en español: [README.es.md](README.es.md)
 *🇪🇸 [Leer en español](README.es.md)*
 
 Interactive automation and data analysis project about football world cups. It includes the creation of the relational database, a Bash script for mass processing and insertion from a CSV, and a suite of advanced analytical queries.
@@ -37,7 +44,7 @@ Have PostgreSQL and the `psql` command-line tool installed.
 ### Setup Steps
 1. **Clone the repository:**
    ```bash
-      git clone https://github.com/Aki-new/world-cup-database.git
+      git clone https://github.com/Akisolu/world-cup-database.git
       cd world-cup-database
    ```
 2. **Create and import the base database:**
